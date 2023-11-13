@@ -1,11 +1,10 @@
-package com.kkyoungs.todolist.ui
+package com.kkyoungs.todolist.ui.main
 
 import android.app.Application
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Delete
 import com.kkyoungs.todolist.domain.model.Todo
 import com.kkyoungs.todolist.domain.repository.TodoRepository
 import kotlinx.coroutines.launch
