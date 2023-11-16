@@ -31,6 +31,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,7 +44,6 @@ import com.kkyoungs.todolist.ui.main.components.TodoItem
 import kotlinx.coroutines.launch
 
 @ExperimentalComposeUiApi
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
     // meterial 3 는 remeberScaffoldState 사용 안함
@@ -54,22 +54,22 @@ fun MainScreen(viewModel: MainViewModel) {
         mutableStateOf("")
     }
     Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("오늘 할 일") })
-        },
+//        topBar = {
+//            TopAppBar(title = { Text("오늘 할 일") })
+//        },
         snackbarHost = { SnackbarHost(scaffoldState) },
-    ){
-        Column(modifier =  Modifier.fillMaxSize()) {
-            OutlinedTextField(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(8.dp),
 
-                value = text, onValueChange = {
+    ){ _ ->
+        Column(modifier =  Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally,) {
+            OutlinedTextField(
+                modifier = Modifier.padding(8.dp).fillMaxWidth(),
+                shape = RoundedCornerShape(8.dp),
+                value = text,
+                onValueChange = {
                     text = it
                     // placeHolder -- > hint
-                }, placeholder = { Text(text = "할일")},
+                },
+                placeholder = { Text(text = "할일")},
                 trailingIcon = {
                     Icon(painter = painterResource(id = R.drawable.baseline_add_24), contentDescription = null)
                 },

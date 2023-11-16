@@ -15,15 +15,17 @@ class MainViewModel(application: Application, private val todoRepository: TodoRe
     private val _items = mutableStateOf(emptyList<Todo>())
     val items:State<List<Todo>> = _items
 
-    private var recentlyDelteTodo:Todo?=null
+    private var recentlyDeleteTodo:Todo?=null
 
 
     fun addTodo(text:String){
-        //코루틴 ㅅ ㅡ코프 사용
+        //코루틴 스코프 사용
         viewModelScope.launch {
             todoRepository.addTodo(Todo(title = text))
         }
     }
+
+    // 클릭했을 때 ui 변환하는 코드 필요
     fun toggle(uid: Int){
         val todo = _items.value.find { todo -> todo.uid == uid }
         todo?.let {
@@ -34,6 +36,9 @@ class MainViewModel(application: Application, private val todoRepository: TodoRe
             }
         }
     }
+
+    // uid 객체 아이디만 지우면 계정 지울수 있음
+
     fun delete(uid: Int){
         val todo = _items.value.find{
             todo-> todo.uid == uid
@@ -42,15 +47,15 @@ class MainViewModel(application: Application, private val todoRepository: TodoRe
             viewModelScope.launch {
 
                 todoRepository.deleteTodo(it)
-                recentlyDelteTodo = it
+                recentlyDeleteTodo = it
             }
         }
     }
     fun restoreTodo(){
         viewModelScope.launch {
-            // 없을때 종료 널이라면 취소
-            todoRepository.addTodo(recentlyDelteTodo ?: return@launch)
-            recentlyDelteTodo = null
+            // 없을때 종료 널 이라면 취소
+            todoRepository.addTodo(recentlyDeleteTodo ?: return@launch)
+            recentlyDeleteTodo = null
         }
 
     }
